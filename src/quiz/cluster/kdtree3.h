@@ -1,13 +1,21 @@
 /* \author Aaron Brown */
 // Quiz on implementing kd tree
-
+#include <pcl/io/pcd_io.h>
+#include <pcl/common/common.h>
+#include <pcl/filters/extract_indices.h>
+#include <pcl/filters/voxel_grid.h>
+#include <pcl/filters/crop_box.h>
+#include <pcl/kdtree/kdtree.h>
+#include <pcl/segmentation/sac_segmentation.h>
+#include <pcl/segmentation/extract_clusters.h>
+#include <pcl/common/transforms.h>
 #include "../../render/render.h"
 
 
 // Structure to represent node of kd tree
 struct Node
 {
-	std::vector<float> point;
+	pcl::PointXYZI point;
 	int id;
 	Node* left;
 	Node* right;
@@ -25,7 +33,7 @@ struct KdTree
 	: root(NULL)
 	{}
 
-	void insert(std::vector<float> point, int id)
+	void insert(pcl::PointXYZI point, int id)
 	{
 		// TODO: Fill in this function to insert a new point into the tree
 		// the function should create a new node and place correctly with in the root 
@@ -33,14 +41,16 @@ struct KdTree
 
 	}
 
-	void insertHelper(Node** node, uint depth, std::vector<float> point, int id)
+	void insertHelper(Node** node, uint depth, pcl::PointXYZI point, int id)
 	{
 		if(*node==NULL)
 			*node = new Node(point,id);
 		else
 		{
 			uint cd = depth % 3;
-			if(point[cd] < ((*node)->point[cd]))
+            std::vector<float> npoint = {node->point.x, node->point.y, node->point.z};
+            std::vector<float> tpoint = {point.x, point.y, point.z};
+			if(tpoint[cd] < (npoint[cd]))
 				insertHelper(&((*node)->left), depth+1, point, id);
 			else
 				insertHelper(&((*node)->right), depth+1, point, id);
@@ -49,24 +59,26 @@ struct KdTree
 	}
 	// return a list of point ids in the tree that are within distance of target
 
-	void searchHelper(std::vector<float> target, Node* node, uint depth, float distanceTol, std::vector<int>& ids)
+	void searchHelper(pcl::PointXYZI target, Node* node, uint depth, float distanceTol, std::vector<int>& ids)
 	{
 		if(node != NULL)
 		{
-			if ((node->point[0]>=target[0]-distanceTol)&&(node->point[0]<=target[0]+distanceTol)&&(node->point[1]>=target[1]-distanceTol)&&(node->point[1]<=target[1]+distanceTol)&&(node->point[2]>=target[2]-distanceTol)&&(node->point[2]<=target[2]+distanceTol))
+			if ((node->point.x>=target.x-distanceTol)&&(node->point.x<=target.x+distanceTol)&&(node->point.y>=target.y-distanceTol)&&(node->point.y<=target.y+distanceTol)&&(node->point.z>=target.z-distanceTol)&&(node->point.z<=target.z+distanceTol))
 			{
-				float distance = sqrt((node->point[0]-target[0])*(node->point[0]-target[0])+(node->point[1]-target[1])*(node->point[1]-target[1])+(node->point[2]-target[2])*(node->point[2]-target[2]));
+				float distance = sqrt((node->point.x-target.x)*(node->point.x-target.x)+(node->point.y-target.y)*(node->point.y-target.y)+(node->point.z-target.z)*(node->point.z-target.z));
 				if (distance <= distanceTol)
 					ids.push_back(node->id);
 			}
-
-			if (target[depth%3]-distanceTol<node->point[depth%3])
+            std::vector<float> npoint = {node->point.x, node->point.y, node->point.z};
+            std::vector<float> tpoint = {target->point.x, target->point.y, target->point.z};
+			if (tpoint[depth%3]-distanceTol<npoint[depth%3])
 				searchHelper(target, node->left, depth+1, distanceTol, ids);
-			if (target[depth%3]+distanceTol>node->point[depth%3])
+			if (tpoint[depth%3]+distanceTol>npoint[depth%3])
 				searchHelper(target, node->right, depth+1, distanceTol, ids);
 		}
 	}
-	std::vector<int> search(std::vector<float> target, float distanceTol)
+    
+	std::vector<int> search(pcl::PointXYZI target, float distanceTol)
 	{
 		std::vector<int> ids;
 
