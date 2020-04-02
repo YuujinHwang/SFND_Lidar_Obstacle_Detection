@@ -63,6 +63,24 @@ kdtree3.h
 /home/workspace/SFND_Lidar_Obstacle_Detection/src/quiz/cluster/kdtree3.h
 
 /home/workspace/SFND_Lidar_Obstacle_Detection/src/quiz/cluster/kdtree3.h
+pcl/io/pcd_io.h
+-
+pcl/common/common.h
+-
+pcl/filters/extract_indices.h
+-
+pcl/filters/voxel_grid.h
+-
+pcl/filters/crop_box.h
+-
+pcl/kdtree/kdtree.h
+-
+pcl/segmentation/sac_segmentation.h
+-
+pcl/segmentation/extract_clusters.h
+-
+pcl/common/transforms.h
+-
 ../../render/render.h
 /home/workspace/SFND_Lidar_Obstacle_Detection/src/render/render.h
 
