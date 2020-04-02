@@ -5,6 +5,9 @@ CMakeFiles/environment.dir/src/environment.cpp.o
  /home/workspace/SFND_Lidar_Obstacle_Detection/src/environment.cpp
  /home/workspace/SFND_Lidar_Obstacle_Detection/src/processPointClouds.cpp
  /home/workspace/SFND_Lidar_Obstacle_Detection/src/processPointClouds.h
+ /home/workspace/SFND_Lidar_Obstacle_Detection/src/quiz/cluster/cluster.cpp
+ /home/workspace/SFND_Lidar_Obstacle_Detection/src/quiz/cluster/kdtree3.h
+ /home/workspace/SFND_Lidar_Obstacle_Detection/src/quiz/ransac/ransac3d.h
  /home/workspace/SFND_Lidar_Obstacle_Detection/src/render/box.h
  /home/workspace/SFND_Lidar_Obstacle_Detection/src/render/render.h
  /home/workspace/SFND_Lidar_Obstacle_Detection/src/sensors/lidar.h

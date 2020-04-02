@@ -5,7 +5,7 @@
 #include "../../render/box.h"
 #include <chrono>
 #include <string>
-#include "kdtree.h"
+#include "kdtree3.h"
 
 // Arguments:
 // window is the region to draw box around

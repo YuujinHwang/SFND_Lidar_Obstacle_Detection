@@ -3,12 +3,13 @@
 // for exploring self-driving car sensors
 
 #include "sensors/lidar.h"
-#include "render/render.h"
-#include "processPointClouds.h"
+// #include "render/render.h"
+// #include "processPointClouds.h"
 // using templates for processPointClouds so also include .cpp to help linker
-#include "processPointClouds.cpp"
-#include "quiz/cluster/kdtree3.h"
+// #include "processPointClouds.cpp"
+// #include "quiz/cluster/kdtree3.h"
 #include "quiz/ransac/ransac3d.h"
+#include "quiz/cluster/cluster.cpp"
 
 std::vector<Car> initHighway(bool renderScene, pcl::visualization::PCLVisualizer::Ptr& viewer)
 {
@@ -90,9 +91,9 @@ void cityBlock(pcl::visualization::PCLVisualizer::Ptr& viewer, ProcessPointCloud
     pcl::PointCloud<pcl::PointXYZI>::Ptr cloudPlane(new pcl::PointCloud<pcl::PointXYZI>());
     pcl::PointCloud<pcl::PointXYZI>::Ptr cloudObstacle(new pcl::PointCloud<pcl::PointXYZI>());
 
-    for(int index = 0; index < filterCloud->point.size(); index++)
+    for(int index = 0; index < filterCloud->points.size(); index++)
     {
-        pcl::PointXYZ point = filterCloud->points[index];
+        pcl::PointXYZI point = filterCloud->points[index];
         if(inliers.count(index))
             cloudPlane->points.push_back(point);
         else
@@ -100,10 +101,10 @@ void cityBlock(pcl::visualization::PCLVisualizer::Ptr& viewer, ProcessPointCloud
     }
 
     KdTree* tree = new KdTree;
-    for(int index = 0; index < point.size(); i++)
-        tree->insert(points[i],i);
+    for(int i = 0; index < cloudObstacle->points.size(); i++)
+        tree->insert(cloudObstacle->points[i],i);
 
-    std::vector<std::vector<int>> clusters = euclideanCluster(points, tree, 3.0);
+    std::vector<std::vector<int>> clusters = euclideanCluster(cloudObstacle->points, tree, 3.0);
     int clusterId = 0;
     std::vector<Color> colors = {Color(1,0,0), Color(1,1,0), Color(0,0,1)};
     for(std::vector<int> cluster : clusters)

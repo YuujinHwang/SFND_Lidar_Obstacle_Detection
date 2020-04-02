@@ -61,12 +61,12 @@ pcl::visualization::PCLVisualizer::Ptr initScene()
   	return viewer;
 }
 
-std::unordered_set<int> Ransac3d(typename pcl::PointCloud<PointT>::Ptr cloud, int maxIterations, float distanceTol)
+std::unordered_set<int> Ransac3d(typename pcl::PointCloud<pcl::PointXYZI>::Ptr cloud, int maxIterations, float distanceTol)
 {
 	std::unordered_set<int> inliersResult;
 	srand(time(NULL));
 
-	for(int i;i<maxIteration;i++)
+	for(int i;i<maxIterations;i++)
 	{
 		std::unordered_set<int> inliers;
 		while (inliers.size() < 3)
@@ -98,7 +98,7 @@ std::unordered_set<int> Ransac3d(typename pcl::PointCloud<PointT>::Ptr cloud, in
 			if(inliers.count(index)>0)
 				continue;
 
-			pcl::PointXYZ point = cloud->points[index];
+			pcl::PointXYZI point = cloud->points[index];
 			float x = point.x;
 			float y = point.y;
 			float z = point.z;
@@ -115,48 +115,4 @@ std::unordered_set<int> Ransac3d(typename pcl::PointCloud<PointT>::Ptr cloud, in
 	
 	return inliersResult;
 
-}
-
-int main ()
-{
-
-	// Create viewer
-	pcl::visualization::PCLVisualizer::Ptr viewer = initScene();
-
-	// Create data
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud = CreateData();
-	
-
-	// TODO: Change the max iteration and distance tolerance arguments for Ransac function
-	std::unordered_set<int> inliers = Ransac(cloud, 0, 0);
-
-	pcl::PointCloud<pcl::PointXYZ>::Ptr  cloudInliers(new pcl::PointCloud<pcl::PointXYZ>());
-	pcl::PointCloud<pcl::PointXYZ>::Ptr cloudOutliers(new pcl::PointCloud<pcl::PointXYZ>());
-
-	for(int index = 0; index < cloud->points.size(); index++)
-	{
-		pcl::PointXYZ point = cloud->points[index];
-		if(inliers.count(index))
-			cloudInliers->points.push_back(point);
-		else
-			cloudOutliers->points.push_back(point);
-	}
-
-
-	// Render 2D point cloud with inliers and outliers
-	if(inliers.size())
-	{
-		renderPointCloud(viewer,cloudInliers,"inliers",Color(0,1,0));
-  		renderPointCloud(viewer,cloudOutliers,"outliers",Color(1,0,0));
-	}
-  	else
-  	{
-  		renderPointCloud(viewer,cloud,"data");
-  	}
-	
-  	while (!viewer->wasStopped ())
-  	{
-  	  viewer->spinOnce ();
-  	}
-  	
 }
