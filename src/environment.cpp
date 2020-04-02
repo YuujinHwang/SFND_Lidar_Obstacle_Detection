@@ -103,7 +103,7 @@ void cityBlock(pcl::visualization::PCLVisualizer::Ptr& viewer, ProcessPointCloud
     KdTree* tree = new KdTree;
     int obstsize = cloudObstacle->points.size();
     for(int i = 0; i<obstsize; i++)
-        std::vector<float> opoint = {cloudObstacle->points[i][0], }
+        // std::vector<float> opoint = {cloudObstacle->points[i][0], }
         tree->insert(cloudObstacle->points[i],i);
 
     std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> clusters = euclideanCluster(cloudObstacle, tree, 3.0);
