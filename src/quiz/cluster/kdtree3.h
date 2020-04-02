@@ -70,7 +70,7 @@ struct KdTree
 					ids.push_back(node->id);
 			}
             std::vector<float> npoint = {node->point.x, node->point.y, node->point.z};
-            std::vector<float> tpoint = {target->point.x, target->point.y, target->point.z};
+            std::vector<float> tpoint = {target.x, target.y, target.z};
 			if (tpoint[depth%3]-distanceTol<npoint[depth%3])
 				searchHelper(target, node->left, depth+1, distanceTol, ids);
 			if (tpoint[depth%3]+distanceTol>npoint[depth%3])

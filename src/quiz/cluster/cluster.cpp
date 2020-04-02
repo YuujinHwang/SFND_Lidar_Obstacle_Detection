@@ -75,12 +75,12 @@
 
 // }
 
-void clusterHelper(int indice, pcl::PointXYZI points, pcl::PointCloud<pcl::PointXYZI>::Ptr cluster, std::vector<bool>& processed, KdTree * tree, float distanceTol)
+void clusterHelper(int indice, pcl::PointXYZI point, pcl::PointCloud<pcl::PointXYZI>::Ptr cluster, std::vector<bool>& processed, KdTree * tree, float distanceTol)
 {
 	processed[indice] = true;
 	cluster.push_back(indice);
 
-	std::vector<int> nearest = tree->search(points[indice], distanceTol);
+	std::vector<int> nearest = tree->search(points, distanceTol);
 
 	for(int id : nearest)
 	{
