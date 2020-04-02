@@ -75,9 +75,10 @@
 
 // }
 
-void clusterHelper(int indice, pcl::PointXYZI point, pcl::PointCloud<pcl::PointXYZI>::Ptr cluster, std::vector<bool>& processed, KdTree * tree, float distanceTol)
+void clusterHelper(int indice, pcl::PointCloud<pcl::PointXYZI>::Ptr cloud, pcl::PointCloud<pcl::PointXYZI>::Ptr cluster, std::vector<bool>& processed, KdTree * tree, float distanceTol)
 {
 	processed[indice] = true;
+	pcl::PointXYZI point = cloud->points[indice]
 	cluster->points.push_back(point);
 
 	std::vector<int> nearest = tree->search(point[indice], distanceTol);
@@ -109,7 +110,7 @@ std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> euclideanCluster(pcl::PointClo
 		}
 
 		pcl::PointCloud<pcl::PointXYZI>::Ptr cluster(new pcl::PointCloud<pcl::PointXYZI>());
-		clusterHelper(i, cloud->points, cluster, processed, tree, distanceTol);
+		clusterHelper(i, cloud, cluster, processed, tree, distanceTol);
 		clusters.push_back(cluster);
 		i++;
 	}
