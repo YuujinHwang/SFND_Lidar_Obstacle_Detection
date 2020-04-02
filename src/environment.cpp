@@ -87,7 +87,7 @@ void cityBlock(pcl::visualization::PCLVisualizer::Ptr& viewer, ProcessPointCloud
     // std::pair<pcl::PointCloud<pcl::PointXYZI>::Ptr, pcl::PointCloud<pcl::PointXYZI>::Ptr> segmentCloud = pointProcessorI->SegmentPlane(filterCloud,100,0.5);
     // std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pointProcessorI->Clustering(segmentCloud.first, 0.5, 10, 10000);
     
-    std::unordered_set<int> inliers = Ransac3d(filterCloud, 100, 0.5);
+    std::unordered_set<int> inliers = Ransac3d(filterCloud, 100, 0.2);
     pcl::PointCloud<pcl::PointXYZI>::Ptr cloudPlane(new pcl::PointCloud<pcl::PointXYZI>());
     pcl::PointCloud<pcl::PointXYZI>::Ptr cloudObstacle(new pcl::PointCloud<pcl::PointXYZI>());
 
