@@ -20,7 +20,7 @@ struct Node
 	Node* left;
 	Node* right;
 
-	Node(std::vector<float> arr, int setId)
+	Node(pcl::PointXYZI arr, int setId)
 	:	point(arr), id(setId), left(NULL), right(NULL)
 	{}
 };
@@ -77,7 +77,7 @@ struct KdTree
 				searchHelper(target, node->right, depth+1, distanceTol, ids);
 		}
 	}
-    
+
 	std::vector<int> search(pcl::PointXYZI target, float distanceTol)
 	{
 		std::vector<int> ids;
