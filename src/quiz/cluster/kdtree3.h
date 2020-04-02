@@ -48,7 +48,7 @@ struct KdTree
 		else
 		{
 			uint cd = depth % 3;
-            std::vector<float> npoint = {node->point.x, node->point.y, node->point.z};
+            std::vector<float> npoint = {(*node)->point.x, (*node)->point.y, (*node)->point.z};
             std::vector<float> tpoint = {point.x, point.y, point.z};
 			if(tpoint[cd] < (npoint[cd]))
 				insertHelper(&((*node)->left), depth+1, point, id);
@@ -63,13 +63,13 @@ struct KdTree
 	{
 		if(node != NULL)
 		{
-			if ((node->point.x>=target.x-distanceTol)&&(node->point.x<=target.x+distanceTol)&&(node->point.y>=target.y-distanceTol)&&(node->point.y<=target.y+distanceTol)&&(node->point.z>=target.z-distanceTol)&&(node->point.z<=target.z+distanceTol))
+			if (((*node)->point.x>=target.x-distanceTol)&&((*node)->point.x<=target.x+distanceTol)&&((*node)->point.y>=target.y-distanceTol)&&((*node)->point.y<=target.y+distanceTol)&&((*node)->point.z>=target.z-distanceTol)&&((*node)->point.z<=target.z+distanceTol))
 			{
-				float distance = sqrt((node->point.x-target.x)*(node->point.x-target.x)+(node->point.y-target.y)*(node->point.y-target.y)+(node->point.z-target.z)*(node->point.z-target.z));
+				float distance = sqrt(((*node)->point.x-target.x)*((*node)->point.x-target.x)+((*node)->point.y-target.y)*((*node)->point.y-target.y)+((*node)->point.z-target.z)*((*node)->point.z-target.z));
 				if (distance <= distanceTol)
 					ids.push_back(node->id);
 			}
-            std::vector<float> npoint = {node->point.x, node->point.y, node->point.z};
+            std::vector<float> npoint = {(*node)->point.x, (*node)->point.y, (*node)->point.z};
             std::vector<float> tpoint = {target->point.x, target->point.y, target->point.z};
 			if (tpoint[depth%3]-distanceTol<npoint[depth%3])
 				searchHelper(target, node->left, depth+1, distanceTol, ids);
