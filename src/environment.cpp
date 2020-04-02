@@ -109,13 +109,13 @@ void cityBlock(pcl::visualization::PCLVisualizer::Ptr& viewer, ProcessPointCloud
     std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> clusters = euclideanCluster(cloudObstacle, tree, 3.0);
     int clusterId = 0;
     std::vector<Color> colors = {Color(1,0,0), Color(1,1,0), Color(0,0,1)};
-    for(std::vector<int> cluster : clusters)
+    for(pcl::PointCloud<pcl::PointXYZI>::Ptr cluster : clusters)
     {
-        pcl::PointCloud<pcl::PointXYZI>::Ptr clusterCloud(new pcl::PointCloud<pcl::PointXYZI>());
-        for (indice: cluster)
-            clusterCloud->points.push_back(pcl::PointXYZI(cloudObstacle[indice]));
+        // pcl::PointCloud<pcl::PointXYZI>::Ptr clusterCloud(new pcl::PointCloud<pcl::PointXYZI>());
+        // for (indice: cluster)
+        //     clusterCloud->points.push_back(cloudObstacle->points[indice]);
         renderPointCloud(viewer, cluster, "obstCLoud"+std::to_string(clusterId));
-        Box box = pointProcessorI->BoundingBox(clusterCloud);
+        Box box = pointProcessorI->BoundingBox(cluster);
         renderBox(viewer,box,clusterId);
 
         ++clusterId;
