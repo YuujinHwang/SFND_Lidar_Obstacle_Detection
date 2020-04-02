@@ -102,7 +102,7 @@ void cityBlock(pcl::visualization::PCLVisualizer::Ptr& viewer, ProcessPointCloud
 
     KdTree* tree = new KdTree;
     int obstsize = cloudObstacle->points.size();
-    for(int i = 0; index < obstsize); i++)
+    for(int i = 0; i<obstsize); i++)
         std::vector<float> opoint = {cloudObstacle->points[i][0], }
         tree->insert(cloudObstacle->points[i],i);
 
