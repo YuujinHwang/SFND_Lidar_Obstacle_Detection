@@ -86,7 +86,7 @@ void clusterHelper(int indice, pcl::PointCloud<pcl::PointXYZI>::Ptr cloud, pcl::
 	for(int id : nearest)
 	{
 		if(!processed[id])
-			clusterHelper(id, point, cluster, processed, tree, distanceTol);
+			clusterHelper(id, cloud, cluster, processed, tree, distanceTol);
 	}
 }
 
