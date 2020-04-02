@@ -78,10 +78,10 @@
 void clusterHelper(int indice, pcl::PointCloud<pcl::PointXYZI>::Ptr cloud, pcl::PointCloud<pcl::PointXYZI>::Ptr cluster, std::vector<bool>& processed, KdTree * tree, float distanceTol)
 {
 	processed[indice] = true;
-	pcl::PointXYZI point = cloud->points[indice]
+	pcl::PointXYZI point = cloud->points[indice];
 	cluster->points.push_back(point);
 
-	std::vector<int> nearest = tree->search(point[indice], distanceTol);
+	std::vector<int> nearest = tree->search(point, distanceTol);
 
 	for(int id : nearest)
 	{
