@@ -61,7 +61,6 @@ pcl::visualization::PCLVisualizer::Ptr initScene()
   	return viewer;
 }
 
-template<typename PointT>
 std::unordered_set<int> Ransac3d(typename pcl::PointCloud<PointT>::Ptr cloud, int maxIterations, float distanceTol)
 {
 	std::unordered_set<int> inliersResult;
