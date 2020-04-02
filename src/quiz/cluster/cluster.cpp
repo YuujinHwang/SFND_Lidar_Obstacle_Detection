@@ -78,25 +78,25 @@
 void clusterHelper(int indice, pcl::PointXYZI point, pcl::PointCloud<pcl::PointXYZI>::Ptr cluster, std::vector<bool>& processed, KdTree * tree, float distanceTol)
 {
 	processed[indice] = true;
-	cluster.push_back(indice);
+	cluster->points.push_back(point);
 
-	std::vector<int> nearest = tree->search(points, distanceTol);
+	std::vector<int> nearest = tree->search(point, distanceTol);
 
 	for(int id : nearest)
 	{
 		if(!processed[id])
-			clusterHelper(id, points, cluster, processed, tree, distanceTol);
+			clusterHelper(id, point, cluster, processed, tree, distanceTol);
 	}
 }
 
-std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> euclideanCluster(std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloud, KdTree* tree, float distanceTol)
+std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> euclideanCluster(pcl::PointCloud<pcl::PointXYZI>::Ptr cloud, KdTree* tree, float distanceTol)
 {
 
 	// TODO: Fill out this function to return list of indices for each cluster
 
 	std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> clusters;
 
-	std::vector<bool> processed(points.size(),false);
+	std::vector<bool> processed(cloud->points.size(),false);
 
 	int i=0;
 	int numpoint = cloud->points.size();
