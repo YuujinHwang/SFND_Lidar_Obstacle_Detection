@@ -109,7 +109,7 @@ std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> euclideanCluster(pcl::PointClo
 		}
 
 		pcl::PointCloud<pcl::PointXYZI>::Ptr cluster(new pcl::PointCloud<pcl::PointXYZI>());
-		clusterHelper(i, cloud->points, cluster, processed, tree, distanceTol);
+		clusterHelper(i, cloud->points[i], cluster, processed, tree, distanceTol);
 		clusters.push_back(cluster);
 		i++;
 	}
@@ -179,4 +179,4 @@ std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> euclideanCluster(pcl::PointClo
 //   	  viewer->spinOnce ();
 //   	}
   	
-}
+// }
